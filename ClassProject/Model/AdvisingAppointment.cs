@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace ClassProject.Model
 {
-    public class CutomerAppointment
+    public class AdvisingAppointment
     {
-        public Customer customer { get; set; }
+        public Students student { get; set; }
         public Appointment appointment { get; set; }
 
-        public CutomerAppointment(Customer c, Appointment a)
+        public AdvisingAppointment(Students c, Appointment a)
         {
-            customer = c;
+            student = c;
             appointment = a;
         }
     }

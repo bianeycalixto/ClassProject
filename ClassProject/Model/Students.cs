@@ -8,14 +8,14 @@ namespace ClassProject.Model
 {
     public class Customers
     {
-        public List<Customer> customers { get; set; }
+        public List<Students> customers { get; set; }
 
         public Customers()
         {
-            customers = new List<Customer>();
+            customers = new List<Students>();
         }
 
-        public Customer Authenticate(string username, string password)
+        public Students Authenticate(string username, string password)
         {
             var c = customers.Where(o => (o.Username == username) && (o.Password == password));
 
@@ -28,5 +28,6 @@ namespace ClassProject.Model
                 return null;
             }
         }
+
     }
 }

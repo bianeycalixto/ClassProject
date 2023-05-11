@@ -16,6 +16,11 @@ namespace ClassProject.Model
         {
             autoIncreament++;
             Id = autoIncreament;
+            date = DateTime.Now;
+            date = date.AddDays(5); // so it can be 5 days out 
+
+
+
         }
     }
 }

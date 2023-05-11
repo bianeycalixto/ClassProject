@@ -6,10 +6,10 @@ namespace ClassProject
     {
         private static Customers customers;
         private static List<Appointment> appointments;
-        private static List<CutomerAppointment> customerAppointments;
-        private static Customer authenticatedCustomer;
+        private static List<AdvisingAppointment> customerAppointments;
+        private static Students authenticatedCustomer;
 
-        private static Customer customer;
+        private static Students customer;
         static void Main(string[] args)
         {
             Console.WriteLine("Initializing...");
@@ -19,14 +19,14 @@ namespace ClassProject
 
         static void Initialize()
         {
-            var c1 = new Customer
+            var c1 = new Students
             {
                 FirstName = "Kambiz",
                 LastName = "Saffari",
                 Username = "kambiz",
                 Password = "1234"
             };
-            var c2 = new Customer
+            var c2 = new Students
             {
                 FirstName = "Terence",
                 LastName = "Ow",
@@ -37,9 +37,9 @@ namespace ClassProject
             var a2 = new Appointment();
             var a3 = new Appointment();
 
-            var ca1 = new CutomerAppointment(c1, a1);
-            var ca2 = new CutomerAppointment(c1, a2);
-            var ca3 = new CutomerAppointment(c2, a3);
+            var ca1 = new AdvisingAppointment(c1, a1);
+            var ca2 = new AdvisingAppointment(c1, a2);
+            var ca3 = new AdvisingAppointment(c2, a3);
 
             customers = new Customers();
             customers.customers.Add(c1);
@@ -50,7 +50,7 @@ namespace ClassProject
             appointments.Add(a2);
             appointments.Add(a3);
 
-            customerAppointments = new List<CutomerAppointment>();
+            customerAppointments = new List<AdvisingAppointment>();
             customerAppointments.Add(ca1);
             customerAppointments.Add(ca2);
             customerAppointments.Add(ca3);
@@ -78,6 +78,9 @@ namespace ClassProject
                     case "3":
                         SignUpMenu();
                         break;
+                    case "4":
+                        MakeAppointment();
+            
                     case "4":
                         GetCurrentAppointmentsMenu();
                         break;
@@ -138,7 +141,7 @@ namespace ClassProject
             Console.Write("Password: ");
             string password = Console.ReadLine();
 
-            var newCustomer = new Customer
+            var newCustomer = new Students
             {
                 FirstName = firstName,
                 LastName = LastName,
@@ -162,7 +165,7 @@ namespace ClassProject
             }
 
 
-            var appointmentList = customerAppointments.Where(o => o.customer.Username == authenticatedCustomer.Username);
+            var appointmentList = customerAppointments.Where(o => o.student.Username == authenticatedCustomer.Username);
 
             if(appointmentList.Count() == 0)
             {
@@ -175,6 +178,11 @@ namespace ClassProject
                     Console.WriteLine(appointmnet.appointment.date);
                 }
             }
+
+
+
+
+
         }
 
 
