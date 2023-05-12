@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ClassProject.Model
 {
-    public class Appointment
+    public class Appointment // declare appointment model to be used
     {
         private static int autoIncreament;
         public int Id { get; set; }

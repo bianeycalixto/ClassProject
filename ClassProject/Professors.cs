@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace ClassProject.Model
 {
-    public class Professors
+    public class Professors // declare Professors model
     {
         public List<Professor> professors { get; set; }
 
         public Professors()
         {
             professors = new List<Professor>();
-        }
+        } // constructer for Professors
     }
 }

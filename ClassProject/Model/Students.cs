@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace ClassProject.Model
 {
-    public class Students
+    public class Students // declare students model to be used later
     {
-        public List<Student> students { get; set; }
+        public List<Student> students { get; set; } 
 
         public Students()
         {
             students = new List<Student>();
-        }
+        } // constructer for students
 
-        public Student Authenticate(string username, string password)
+        public Student Authenticate(string username, string password) // checks user entered username and password. returns user if T other wise NO
         {
             var c = students.Where(o => (o.Username == username) && (o.Password == password));
 

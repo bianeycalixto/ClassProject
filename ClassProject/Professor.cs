@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ClassProject.Model
 {
-    public class Professor
+    public class Professor // declare Professor model
+
     {
         private static int autoIncreament;
         public int Id { get; set; }
@@ -18,6 +19,6 @@ namespace ClassProject.Model
         {
             autoIncreament++;
             Id = autoIncreament;
-        }
+        }// contructeer for Professor 
     }
 }
