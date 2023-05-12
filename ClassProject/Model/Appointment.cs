@@ -12,15 +12,12 @@ namespace ClassProject.Model
         public int Id { get; set; }
         public DateTime date { get; set; }
 
-        public Appointment()
+        public Appointment(int days)
         {
             autoIncreament++;
             Id = autoIncreament;
             date = DateTime.Now;
-            date = date.AddDays(5); // so it can be 5 days out 
-
-
-
+            date = date.AddDays(days);
         }
     }
 }

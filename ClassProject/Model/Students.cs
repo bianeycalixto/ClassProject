@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace ClassProject.Model
 {
-    public class Customers
+    public class Students
     {
-        public List<Students> customers { get; set; }
+        public List<Student> students { get; set; }
 
-        public Customers()
+        public Students()
         {
-            customers = new List<Students>();
+            students = new List<Student>();
         }
 
-        public Students Authenticate(string username, string password)
+        public Student Authenticate(string username, string password)
         {
-            var c = customers.Where(o => (o.Username == username) && (o.Password == password));
+            var c = students.Where(o => (o.Username == username) && (o.Password == password));
 
-            if(c.Count() > 0)
+            if (c.Count() > 0)
             {
                 return c.First();
             }
@@ -28,6 +28,5 @@ namespace ClassProject.Model
                 return null;
             }
         }
-
     }
 }

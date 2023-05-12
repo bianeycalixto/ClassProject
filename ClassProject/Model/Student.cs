@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ClassProject.Model
 {
-    public class Students
+    public class Student
     {
         private static int autoIncreament;
         public int Id { get; set; }
@@ -15,7 +15,7 @@ namespace ClassProject.Model
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        public Students()
+        public Student()
         {
             autoIncreament++;
             Id = autoIncreament;

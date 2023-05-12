@@ -1,15 +1,25 @@
 ﻿using ClassProject.Model;
 
+//git commands: 
+
+//git status
+//git add .
+//git commit -m "did things"
+//git push origin head
+
+//git checkout delopment
+//git pull origin delopment
+
 namespace ClassProject
 {
     public class Program
     {
-        private static Customers customers;
-        private static List<Appointment> appointments;
-        private static List<AdvisingAppointment> customerAppointments;
-        private static Students authenticatedCustomer;
+        private static Students students = new Students();
+        private static List<Appointment> appointment = new List<Appointment>();
+        private static List<StudentAppointment> studentAppointments = new List<StudentAppointment>();
+        private static Student authenticatedStudent;
 
-        private static Students customer;
+        private static Student student;
         static void Main(string[] args)
         {
             Console.WriteLine("Initializing...");
@@ -19,43 +29,23 @@ namespace ClassProject
 
         static void Initialize()
         {
-            var c1 = new Students
+            var c1 = new Student
             {
                 FirstName = "Kambiz",
                 LastName = "Saffari",
                 Username = "kambiz",
                 Password = "1234"
             };
-            var c2 = new Students
+            var c2 = new Student
             {
                 FirstName = "Terence",
                 LastName = "Ow",
                 Username = "terence",
                 Password = "2345"
             };
-            var a1 = new Appointment();
-            var a2 = new Appointment();
-            var a3 = new Appointment();
 
-            var ca1 = new AdvisingAppointment(c1, a1);
-            var ca2 = new AdvisingAppointment(c1, a2);
-            var ca3 = new AdvisingAppointment(c2, a3);
-
-            customers = new Customers();
-            customers.customers.Add(c1);
-            customers.customers.Add(c2);
-
-            appointments = new List<Appointment>();
-            appointments.Add(a1);
-            appointments.Add(a2);
-            appointments.Add(a3);
-
-            customerAppointments = new List<AdvisingAppointment>();
-            customerAppointments.Add(ca1);
-            customerAppointments.Add(ca2);
-            customerAppointments.Add(ca3);
-
-
+            students.students.Add(c1);
+            students.students.Add(c2);
         }
 
         static void Menu()
@@ -64,10 +54,10 @@ namespace ClassProject
 
             while (!done)
             {
-                Console.WriteLine("Options: Login: 1 --- Logout: 2 --- Sign Up: 3 --- Appointments: 4 --- Clear Screen: c --- Quit: q ---");
+                Console.WriteLine("Options: \r\n Login: 1 \r\n Logout: 2 \r\n Sign Up: 3 \r\n Create Appointment: 4 \r\n Show Appointment: 5 \r\n Clear Screen: c \r\n Quit: q");
                 Console.Write("Choice: ");
                 string choice = Console.ReadLine();
-                switch(choice)
+                switch (choice)
                 {
                     case "1":
                         LoginMenu();
@@ -79,9 +69,13 @@ namespace ClassProject
                         SignUpMenu();
                         break;
                     case "4":
-                        MakeAppointment();
-            
-                    case "4":
+                        Console.Write("How many days away would you like to schedule?");
+                        int days = Convert.ToInt32(Console.ReadLine());
+                        var apt = MakeAppointment(days);
+                        var ca3 = new StudentAppointment(authenticatedStudent, apt);
+                        studentAppointments.Add(ca3);
+                        break;
+                    case "5":
                         GetCurrentAppointmentsMenu();
                         break;
                     case "c":
@@ -102,16 +96,16 @@ namespace ClassProject
 
         static void LoginMenu()
         {
-            if(authenticatedCustomer == null)
+            if (authenticatedStudent == null)
             {
                 Console.Write("Enter your username: ");
                 string username = Console.ReadLine();
                 Console.Write("Enter your password: ");
                 string password = Console.ReadLine();
-                authenticatedCustomer = customers.Authenticate(username, password);
-                if (authenticatedCustomer != null)
+                authenticatedStudent = students.Authenticate(username, password);
+                if (authenticatedStudent != null)
                 {
-                    Console.WriteLine($"Welcome {authenticatedCustomer.FirstName}");
+                    Console.WriteLine($"Welcome {authenticatedStudent.FirstName}");
                 }
                 else
                 {
@@ -120,13 +114,13 @@ namespace ClassProject
             }
             else
             {
-                Console.WriteLine($"You are already logged in as {authenticatedCustomer.Username}");
+                Console.WriteLine($"You are already logged in as {authenticatedStudent.Username}");
             }
         }
 
         static void LogoutMenu()
         {
-            authenticatedCustomer = null;
+            authenticatedStudent = null;
             Console.WriteLine("Logged out!");
         }
 
@@ -141,7 +135,7 @@ namespace ClassProject
             Console.Write("Password: ");
             string password = Console.ReadLine();
 
-            var newCustomer = new Students
+            var newStudent = new Student
             {
                 FirstName = firstName,
                 LastName = LastName,
@@ -149,7 +143,7 @@ namespace ClassProject
                 Password = password
             };
 
-            customers.customers.Add(newCustomer);
+            students.students.Add(newStudent);
 
             Console.WriteLine("Profile created!");
 
@@ -158,34 +152,34 @@ namespace ClassProject
 
         static void GetCurrentAppointmentsMenu()
         {
-            if(authenticatedCustomer == null)
+            if (authenticatedStudent == null)
             {
                 Console.WriteLine("You are not logged in.");
                 return;
             }
 
+            var appointmentList = studentAppointments.Where(o => o.student.Username == authenticatedStudent.Username);
 
-            var appointmentList = customerAppointments.Where(o => o.student.Username == authenticatedCustomer.Username);
-
-            if(appointmentList.Count() == 0)
+            if (appointmentList.Count() == 0)
             {
                 Console.WriteLine("0 appointment found.");
             }
             else
             {
-                foreach(var appointmnet in appointmentList)
+                foreach (var appointmnet in appointmentList)
                 {
                     Console.WriteLine(appointmnet.appointment.date);
                 }
             }
-
-
-
-
-
         }
 
+        static Appointment MakeAppointment(int days)
+        {
+            var apt = new Appointment(days);
+            return apt;
 
+        }
+        
 
 
     }
