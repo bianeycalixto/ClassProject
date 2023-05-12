@@ -1,19 +1,10 @@
 ﻿using ClassProject.Model;
 
-//git commands: 
-
-//git status
-//git add .
-//git commit -m "did things"
-//git push origin head
-
-//git checkout delopment
-//git pull origin delopment
-
 namespace ClassProject
 {
     public class Program
     {
+        //initilizate class variables to be used in processing
         private static Students students = new Students();
         private static List<Appointment> appointment = new List<Appointment>();
         private static List<StudentAppointment> studentAppointments = new List<StudentAppointment>();
@@ -28,7 +19,7 @@ namespace ClassProject
             Menu();
         }
 
-        static void Initialize()
+        static void Initialize() //initialize local variables, including professors and students already in the system
         {
             var c1 = new Student
             {
@@ -46,7 +37,7 @@ namespace ClassProject
             };
 
             students.students.Add(c1);
-            students.students.Add(c2);
+            students.students.Add(c2); //add students to list
 
             var p1 = new Professor
             {
@@ -87,35 +78,35 @@ namespace ClassProject
             Professors.Add(p2);
             Professors.Add(p3);
             Professors.Add(p4);
-            Professors.Add(p5);
+            Professors.Add(p5); //add profesors to list
         }
 
         static void Menu()
         {
             bool done = false;
 
-            while (!done)
+            while (!done) //the main menu loops until the user presses q, which sets the boolean to true, exiting the loop
             {
                 Console.WriteLine("Options: \r\n Login: 1 \r\n Logout: 2 \r\n Sign Up: 3 \r\n Create Appointment: 4 \r\n Show Appointment: 5 \r\n Clear Screen: c \r\n Quit: q");
                 Console.Write("Choice: ");
                 string choice = Console.ReadLine();
-                switch (choice)
+                switch (choice) //the choice from the user is parsed and the proper submenu is opened
                 {
                     case "1":
-                        LoginMenu();
+                        LoginMenu(); //login menu; prompts for username and password, autheniticates user
                         break;
                     case "2":
-                        LogoutMenu();
+                        LogoutMenu(); //clears the authenticated user role, locking the other features
                         break;
                     case "3":
-                        SignUpMenu();
+                        SignUpMenu(); //allows for the creation of a new account 
                         break;
                     case "4":
-                        var p1 = new Professor();
-                        Console.Write("What subject do you need help with: 1 = English, 2 = Math, 3 = Chemistry, 4 = Coding, 5 = Physics; ");
+                        var p1 = new Professor(); //scheduling for appointments
+                        Console.Write("What subject do you need help with: 1 = English, 2 = Math, 3 = Chemistry, 4 = Coding, 5 = Physics"); //user chooses the subject that they need help with
                         string ans = Console.ReadLine();
                         switch (ans)
-                        {
+                        { //anser is parsed and professor that given subject is chosen and assigned
                             case "1":
                                 p1 = Professors[1];
                                 break;
@@ -135,20 +126,20 @@ namespace ClassProject
                                 Console.WriteLine("Sorry, no profesors available for given subject...");
                                 break;
                         }
-                        Console.Write("How many days away would you like to schedule?");
+                        Console.Write("How many days away would you like to schedule?"); //they choose how many days away they would like the meeting to be
                         int days = Convert.ToInt32(Console.ReadLine());
-                        var apt = MakeAppointment(days, p1);
+                        var apt = MakeAppointment(days, p1); //creates the appointment using the specified days and the professor relevant to the subject
                         var ca3 = new StudentAppointment(authenticatedStudent, apt, p1);
-                        studentAppointments.Add(ca3);
+                        studentAppointments.Add(ca3); //adds the appointment to the list that the student has 
                         break;
                     case "5":
-                        GetCurrentAppointmentsMenu();
+                        GetCurrentAppointmentsMenu(); //prints out the current list of appointments for the logged in student
                         break;
                     case "c":
-                        Console.Clear();
+                        Console.Clear(); //clears the console 
                         break;
                     case "q":
-                        done = true;
+                        done = true; //exits the loop
                         break;
                     default:
                         Console.WriteLine("Invalid command!");
@@ -162,13 +153,13 @@ namespace ClassProject
 
         static void LoginMenu()
         {
-            if (authenticatedStudent == null)
+            if (authenticatedStudent == null) //only starts if no one is logged in, else just breaks
             {
                 Console.Write("Enter your username: ");
                 string username = Console.ReadLine();
                 Console.Write("Enter your password: ");
                 string password = Console.ReadLine();
-                authenticatedStudent = students.Authenticate(username, password);
+                authenticatedStudent = students.Authenticate(username, password); //verifies username and password with what user enters
                 if (authenticatedStudent != null)
                 {
                     Console.WriteLine($"Welcome {authenticatedStudent.FirstName}");
@@ -184,14 +175,15 @@ namespace ClassProject
             }
         }
 
-        static void LogoutMenu()
+        static void LogoutMenu() //logs out the user 
         {
             authenticatedStudent = null;
             Console.WriteLine("Logged out!");
         }
 
-        static void SignUpMenu()
+        static void SignUpMenu() //creates a new student struct that is then added to the Students list  
         {
+            //takes in all necesary infor and adds to the model
             Console.Write("First Name: ");
             string firstName = Console.ReadLine();
             Console.Write("Last Name: ");
@@ -216,7 +208,7 @@ namespace ClassProject
         }
 
 
-        static void GetCurrentAppointmentsMenu()
+        static void GetCurrentAppointmentsMenu() //prints out the list of appointments assigned to the student that is logged in. 
         {
             if (authenticatedStudent == null)
             {
@@ -232,14 +224,14 @@ namespace ClassProject
             }
             else
             {
-                foreach (var appointmnet in appointmentList)
+                foreach (var appointmnet in appointmentList) //if count of appointments is greater than 0, loops through all of them and prints out the date, time, professor and subject 
                 {
                     Console.WriteLine("Chosen appointment: " + appointmnet.appointment.date + " with " + appointmnet.appointment.prof.FirstName + " " + appointmnet.appointment.prof.LastName + ". Subject: " + appointmnet.appointment.prof.Subject);
                 }
             }
         }
 
-        static Appointment MakeAppointment(int days, Professor p1)
+        static Appointment MakeAppointment(int days, Professor p1) //makes the appointment and returns it
         {
             var apt = new Appointment(days, p1);
             return apt;
