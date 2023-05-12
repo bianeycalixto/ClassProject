@@ -10,11 +10,13 @@ namespace ClassProject.Model
     {
         public Student student { get; set; }
         public Appointment appointment { get; set; }
+        public Professor professor { get; set; }
 
-        public StudentAppointment(Student s, Appointment a)
+        public StudentAppointment(Student s, Appointment a, Professor p)
         {
             student = s;
             appointment = a;
+            professor = p;
         }
 
     }

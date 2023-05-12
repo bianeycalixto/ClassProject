@@ -17,6 +17,7 @@ namespace ClassProject
         private static Students students = new Students();
         private static List<Appointment> appointment = new List<Appointment>();
         private static List<StudentAppointment> studentAppointments = new List<StudentAppointment>();
+        private static List<Professor> Professors = new List<Professor>();
         private static Student authenticatedStudent;
 
         private static Student student;
@@ -46,6 +47,47 @@ namespace ClassProject
 
             students.students.Add(c1);
             students.students.Add(c2);
+
+            var p1 = new Professor
+            {
+                FirstName = "Angela",
+                LastName = "Sorby",
+                Subject = "English"
+            };
+
+            var p2 = new Professor
+            {
+                FirstName = "John",
+                LastName = "Schaaf",
+                Subject = "Math",
+            };
+
+            var p3 = new Professor
+            {
+                FirstName = "Todd",
+                LastName = "Bangura",
+                Subject = "Chemistry",
+            };
+
+            var p4 = new Professor
+            {
+                FirstName = "Clifton",
+                LastName = "Ellis",
+                Subject = "Coding",
+            };
+
+            var p5 = new Professor
+            {
+                FirstName = "Michael",
+                LastName = "Johns",
+                Subject = "Physics",
+            };
+
+            Professors.Add(p1);
+            Professors.Add(p2);
+            Professors.Add(p3);
+            Professors.Add(p4);
+            Professors.Add(p5);
         }
 
         static void Menu()
@@ -69,10 +111,34 @@ namespace ClassProject
                         SignUpMenu();
                         break;
                     case "4":
+                        var p1 = new Professor();
+                        Console.Write("What subject do you need help with: 1 = English, 2 = Math, 3 = Chemistry, 4 = Coding, 5 = Physics; ");
+                        string ans = Console.ReadLine();
+                        switch (ans)
+                        {
+                            case "1":
+                                p1 = Professors[1];
+                                break;
+                            case "2":
+                                p1 = Professors[2];
+                                break;
+                            case "3":
+                                p1 = Professors[3];
+                                break;
+                            case "4":
+                                p1 = Professors[4];
+                                break;
+                            case "5":
+                                p1 = Professors[5];
+                                break;
+                            default:
+                                Console.WriteLine("Sorry, no profesors available for given subject...");
+                                break;
+                        }
                         Console.Write("How many days away would you like to schedule?");
                         int days = Convert.ToInt32(Console.ReadLine());
-                        var apt = MakeAppointment(days);
-                        var ca3 = new StudentAppointment(authenticatedStudent, apt);
+                        var apt = MakeAppointment(days, p1);
+                        var ca3 = new StudentAppointment(authenticatedStudent, apt, p1);
                         studentAppointments.Add(ca3);
                         break;
                     case "5":
@@ -168,18 +234,18 @@ namespace ClassProject
             {
                 foreach (var appointmnet in appointmentList)
                 {
-                    Console.WriteLine(appointmnet.appointment.date);
+                    Console.WriteLine("Chosen appointment: " + appointmnet.appointment.date + " with " + appointmnet.appointment.prof.FirstName + " " + appointmnet.appointment.prof.LastName + ". Subject: " + appointmnet.appointment.prof.Subject);
                 }
             }
         }
 
-        static Appointment MakeAppointment(int days)
+        static Appointment MakeAppointment(int days, Professor p1)
         {
-            var apt = new Appointment(days);
+            var apt = new Appointment(days, p1);
             return apt;
 
         }
-        
+
 
 
     }

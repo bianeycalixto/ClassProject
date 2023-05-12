@@ -6,19 +6,18 @@ using System.Threading.Tasks;
 
 namespace ClassProject.Model
 {
-    public class Appointment
+    public class Professor
     {
         private static int autoIncreament;
         public int Id { get; set; }
-        public DateTime date { get; set; }
-        public Professor prof { get; set; }
-        public Appointment(int days, Professor p1)
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Subject { get; set; }
+
+        public Professor()
         {
             autoIncreament++;
             Id = autoIncreament;
-            date = DateTime.Now;
-            date = date.AddDays(days);
-            prof = p1;
         }
     }
 }
